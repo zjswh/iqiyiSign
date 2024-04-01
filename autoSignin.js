@@ -114,20 +114,14 @@ function SignIn(remarks) {
     })
         .then(data => {
             if(data.data.code !== "A00000") {
-                msg = '签到失败:' + data.data.message
-                return {msg}
+                return '签到失败:' + data.data.message
             } else  if (data.data.data.code !== "A0000") {
-                msg = '签到失败:' + data.data.data.msg
-                return {msg}
-            } else{
-                msg = "爱奇艺-应用签到: 累计签到" + data.data.data.signDays + "天"
+                return '签到失败:' + data.data.data.msg
             }
-            return {msg}
+            return "爱奇艺-应用签到: 累计签到" + data.data.data.signDays + "天"
         })
         .catch(e => {
-            msg =  e.message
-            errorMessage.push(e.message)
-            return {msg}
+            return e.message
         })
 }
 
@@ -164,6 +158,6 @@ function w(){
 !(async () => {
     await dealToken()
     await Checkin()
-    const {sendMessage} =  await  SignIn()
+    const sendMessage = await SignIn()
     console.log(sendMessage)
 })()
