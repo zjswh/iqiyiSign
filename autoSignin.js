@@ -16,19 +16,33 @@ async function dealToken() {
         instance = await initInstance()
     } catch (e) {}
 
-    let iqiyiToken = process.env.iqiyiToken || ""
+    let iqiyiToken = process.env.iqiyiToken || []
     try {
         if (instance) iqiyiToken = await getEnv(instance, 'iqiyiToken')
     } catch (e) {}
 
-    if (iqiyiToken === "") {
+    let iqiyiTokenArray = []
+
+    if (Array.isArray(iqiyiToken)) iqiyiTokenArray = refreshToken
+    else if (iqiyiToken.indexOf('&') > -1)
+        iqiyiTokenArray = iqiyiToken.split('&')
+    else if (iqiyiToken.indexOf('\n') > -1)
+        iqiyiTokenArray = iqiyiToken.split('\n')
+    else iqiyiTokenArray = [iqiyiToken]
+
+    if (!iqiyiTokenArray.length) {
         console.log('未获取到iqiyiToken, 程序终止')
         process.exit(1)
     }
 
-    P00001 = iqiyiToken.match(/P00001=(.*?);/)[1];
-    P00003 = iqiyiToken.match(/P00003=(.*?);/)[1];
+    const token = iqiyiTokenArray[0].value || ""
+    if (token === "") {
+        console.log('未获取到iqiyiToken, 程序终止')
+        process.exit(1)
+    }
 
+    P00001 = token.match(/P00001=(.*?);/)[1];
+    P00003 = token.match(/P00003=(.*?);/)[1];
     return
 }
 
