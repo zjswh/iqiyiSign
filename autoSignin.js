@@ -23,7 +23,7 @@ async function dealToken() {
 
     let iqiyiTokenArray = []
 
-    if (Array.isArray(iqiyiToken)) iqiyiTokenArray = refreshToken
+    if (Array.isArray(iqiyiToken)) iqiyiTokenArray = iqiyiToken
     else if (iqiyiToken.indexOf('&') > -1)
         iqiyiTokenArray = iqiyiToken.split('&')
     else if (iqiyiToken.indexOf('\n') > -1)
