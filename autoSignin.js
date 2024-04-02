@@ -118,7 +118,7 @@ function SignIn(remarks) {
             } else  if (data.data.data.code !== "A0000") {
                 return '签到失败:' + data.data.data.msg
             }
-            return "爱奇艺-应用签到: 累计签到" + data.data.data.signDays + "天"
+            return "爱奇艺-应用签到: 累计签到" + data.data.data.data.signDays + "天"
         })
         .catch(e => {
             return e.message
